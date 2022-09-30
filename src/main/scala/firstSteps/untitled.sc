@@ -7,3 +7,5 @@ val values = period(f)(2)
 values.take(6).force
 */
 for (n<-2 to 6) yield math.round(math.exp(n)).toInt
+
+Seq[Int]().reduce(_*_)
