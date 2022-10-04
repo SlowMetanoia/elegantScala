@@ -1,5 +1,5 @@
 import scala.annotation.tailrec
-import scala.util.Random
+
 
 /**
  * Как-то писал я лабу по защите информации и надо мне было генерировать большие простые числа
@@ -8,6 +8,7 @@ import scala.util.Random
 
 //Генерирование больших простых чисел с применением критерия полингтона
 def generateBigPrime(edge:BigInt):BigInt  = {
+  val rand = new scala.util.Random()
   //Ряды
   def series[T](prev: T)(next: T => T): LazyList[T] = prev #:: series(next(prev))(next)
   //Не совсем натуральные числа
@@ -32,7 +33,7 @@ def generateBigPrime(edge:BigInt):BigInt  = {
   val somePrimeNumbers = erotothfenFilter(100000).drop(1)
 
   // выбираем случайное простое число
-  val initialPrime = somePrimeNumbers(Random.nextInt(somePrimeNumbers.length))
+  val initialPrime = somePrimeNumbers(rand.nextInt(somePrimeNumbers.length))
 
   //Получение большого случайного числа в границах от l до r
   def bigRandomInt(l: BigInt, r: BigInt): BigInt = {
@@ -40,10 +41,9 @@ def generateBigPrime(edge:BigInt):BigInt  = {
     val length = r - l
     val byteNumber = x2.find(_ > length).get.toInt
     val c = (1 to byteNumber).map(x => BigInt(Byte.MaxValue)).product - r
-    val rnd = Random.nextBytes(byteNumber).map(BigInt(_)).reduce(_ * Byte.MaxValue + _)
+    val rnd = rand.nextBytes(byteNumber).map(BigInt(_)).reduce(_ * Byte.MaxValue + _)
     l + rnd - c
   }
-
 
   //медленное возведение в степень
   def pow(x: BigInt, y: BigInt): BigInt = {
@@ -82,8 +82,9 @@ def generateBigPrime(edge:BigInt):BigInt  = {
   primeIncreasing(initialPrime,edge)
 }
 
-val two = BigInt(2)
-val x = two pow 20
+val two:BigInt = 2
+val x = two pow 30
+val prime = generateBigPrime(x)
 
 //todo: дописать проверку на то, что алгоритм действительно работает
 
@@ -91,3 +92,4 @@ val x = two pow 20
  * В итоге, пока я искал способ по-нормальному проверить, работает ли алгоритм, я нашёл генерацию с.ч.
  * из из java, реализованную из коробки. Самый ценный вывод, который только можно сделать из этого участка.
  */
+
