@@ -106,14 +106,11 @@ object TryOne{
  */
 object TryTwo{
   import seContainer.se
-  val fields: Unit = {
+  val fields = {
     //имена и начальные значения
     val names = Seq("scaleX", "shareX", "shiftX", "scaleY", "shareY", "shiftY")
     val inits = Seq(1,0,0,1,0,0)
-    //Выглядит страшно, но работать вполне будет.
-    //Для красоты и менее кривого решения можно заменить null на Option, и переписать весь код в соответствующей манере.
-    //Для более крупных кусков кода это будет иметь смысл, но в данном случае, разница минимальна, а так короче.
-    var fields = Seq[NumberTextField](null,null,null,null,null,null)
+    var fields = Seq.empty[NumberTextField]
     //В остальном всё также, но короче и более читаемо.
     fields = names
       .zip(inits)
